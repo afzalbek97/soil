@@ -10,7 +10,6 @@ Create soil application to learn FastAPI basics
 - FastAPI focus on Validation. Docs and Devolopment process
 - Conda Virtual Environtment
 
-
 ## Project run sources
 
 - Install conda & create virtual environtmen 
@@ -25,4 +24,7 @@ conda create --name soil python=3.11.0 numpy
 conda activate soil
 conda deactivate
 
+pip install pillow 
+pip freeze > requirements.txt
+pip install -r requirements.txt
 '''
