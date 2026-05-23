@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 """FastAPI uses Starlette Framework under the hood"""
-from starlette.requests import Request, Response
+from fastapi import Request
 
 
 print("\n Backend Server Is Running \n")
@@ -8,9 +8,6 @@ app = FastAPI(title="Landing FastAPI soil")
 
 
 @app.get("/")
-async def get_greeting(request: Request, response: Response):
+async def get_greeting(request: Request) -> str:
     print("request:", request)
-    response.status_code = 200
-    response.body = b"Hello from Starlette"
-    print("response:", response)
-    return response
+    return "Hello from Starlette"
