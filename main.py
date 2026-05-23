@@ -11,3 +11,7 @@ app = FastAPI(title="Landing FastAPI soil")
 async def get_greeting(request: Request) -> str:
     print("request:", request)
     return "Hello from Starlette"
+
+@app.get("/message", response_model=dict)
+async def get_message():
+    return {"message": "Hi Afzal"}
