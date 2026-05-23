@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 """FastAPI uses Starlette Framework under the hood"""
 from fastapi import Request
+from provider import students
 
 
 print("\n Backend Server Is Running \n")
@@ -15,3 +16,10 @@ async def get_greeting(request: Request) -> str:
 @app.get("/message", response_model=dict)
 async def get_message():
     return {"message": "Hi Afzal"}
+
+
+# FastAPI handles JESON
+@app.get("/Afzal/all", response_model=dict[int, dict])
+async def get_students():
+    return students
+    
