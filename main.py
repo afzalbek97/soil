@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Path, Query
 """FastAPI uses Starlette Framework under the hood"""
 from fastapi import Request
-from provider import students
+from provider import Student, students
 
 print("\n Backend Server Is Running \n")
 app = FastAPI(title="Landing FastAPI soil")
@@ -19,13 +19,13 @@ async def get_message():
 
 
 # FastAPI handles JESON
-@app.get("/mit/all", response_model=dict[int, dict]) 
+@app.get("/mit/all", response_model=dict[int, Student]) 
 def get_students():
     return students
 
 
 # Path params
-@app.get("/mit/student/{id}", response_model=dict)
+@app.get("/mit/student/{id}", response_model=Student)
 def get_students_by_id(id: int = Path (ge=1)):
     if id not in students:
         raise HTTPException(
@@ -35,7 +35,7 @@ def get_students_by_id(id: int = Path (ge=1)):
 
 
 # Query params
-@app.get("/mit/student", response_model=list[dict])
+@app.get("/mit/student", response_model=list[Student])
 def get_student_by_name(name: str = Query(min_length=3, max_length=20)):
-    result = [s for s in students.values() if s["name"] == name]
+    result = [s for s in students.values() if s.name == name]
     return result
