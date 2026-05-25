@@ -14,6 +14,9 @@ Create soil application to learn FastAPI basics
 - JSON parsing, enums and params
 - Params Validation & DTO Validation  (Pydantic)
 
+- ASGI Server (uvicorn) vs WSGI server (gunicorn)
+  uvicorn > Starlette > FastAPI
+
 ## Project run sources
 
 - Install conda & create virtual environtmen 
@@ -44,4 +47,7 @@ pip freeze > requirements.txt
 '''
 for Development:
 fastapi dev main.py --port 5000
+
+for Development & Production:
+unicorn main:app --port 5000 --reload
 '''
