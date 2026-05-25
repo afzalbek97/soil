@@ -1,8 +1,7 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Path, Query
 """FastAPI uses Starlette Framework under the hood"""
 from fastapi import Request
 from provider import students
-
 
 print("\n Backend Server Is Running \n")
 app = FastAPI(title="Landing FastAPI soil")
@@ -12,6 +11,7 @@ app = FastAPI(title="Landing FastAPI soil")
 async def get_greeting(request: Request) -> str:
     print("request:", request)
     return "Hello from Starlette"
+
 
 @app.get("/message", response_model=dict)
 async def get_message():
@@ -26,7 +26,7 @@ def get_students():
 
 # Path params
 @app.get("/mit/student/{id}", response_model=dict)
-def get_students_by_id(id: int):
+def get_students_by_id(id: int = Path (ge=1)):
     if id not in students:
         raise HTTPException(
             status_code=400, detail=f"Student id={id} not found"
@@ -36,6 +36,6 @@ def get_students_by_id(id: int):
 
 # Query params
 @app.get("/mit/student", response_model=list[dict])
-def get_student_by_name(name: str):
+def get_student_by_name(name: str = Query(min_length=3, max_length=20)):
     result = [s for s in students.values() if s["name"] == name]
     return result
