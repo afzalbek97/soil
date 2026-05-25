@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Path, Query
+from fastapi import FastAPI, HTTPException, Path, Query, Body
 """FastAPI uses Starlette Framework under the hood"""
 from fastapi import Request
 from provider import Student, students
@@ -58,3 +58,14 @@ def edit_student(
     student.age = age
     return student
 
+
+# DTO Validation
+@app.post("/mit/add", response_model=Student)
+def add_student(student: Student = Body(...)):
+    print(f"the req.body: {student}")
+    
+    if student.id in students:
+        raise HTTPException(status_code=400, detail=f"{student.id=} exists!")
+        
+    students[student.id] = student
+    return student
